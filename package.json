@@ -1,0 +1,37 @@
+{
+  "name": "web-porto-2",
+  "version": "1.0.0",
+  "description": "Personal portfolio website for a Computer Science student focused on Data Analytics and AI Automation, built with Next.js 14 and Tailwind CSS.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [
+    "nextjs",
+    "portfolio",
+    "data-analytics",
+    "ai",
+    "llm"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^25.3.3",
+    "@types/react": "^19.2.14",
+    "framer-motion": "^12.34.4",
+    "lucide-react": "^0.576.0",
+    "next": "^14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^3.7.0",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.14"
+  }
+}
