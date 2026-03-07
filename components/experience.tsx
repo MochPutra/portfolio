@@ -7,46 +7,84 @@ import { ChevronDown } from "lucide-react";
 
 const items = [
   {
-    period: "2025",
-    title: "Data Analytics Internship",
-    org: "Tech Company / Startup",
-    description:
-      "Worked with product and marketing teams to build dashboards, clean data, and support weekly performance reviews.",
-    focus: ["SQL", "Reporting", "Stakeholder communication"],
-    logo: "/images/experience/ummi.png", // ← ganti path logo instansi
+    title: "Admin ADS Marketplace",
+    org: "Trustdigital",
+    duration: "Nov 2025 - Jan 2026",
+    type: "Internship",
+    description: [
+      "Manajemen Iklan Berbayar: Merencanakan, memantau, dan mengoptimalkan kampanye iklan di Shopee Ads, Tokopedia Ads, dan TikTok Ads untuk mencapai target ROAS yang telah ditentukan.",
+      "Optimasi SEO Marketplace: Melakukan riset kata kunci serta mengoptimalkan judul dan deskripsi produk untuk meningkatkan traffic organik dan peringkat pencarian toko.",
+      "Analisis Performa: Menyusun laporan performa harian dan mingguan yang mencakup metrik penting seperti CTR (Click-Through Rate), CPC (Cost Per Click), dan tingkat konversi penjualan untuk mendukung pengambilan keputusan berbasis data.",
+      "Manajemen Promosi: Mengelola kalender promosi toko, termasuk flash sale, voucher toko, serta partisipasi dalam kampanye besar seperti 11.11 dan 12.12.",
+      "Pengelolaan Operasional Toko: Menjaga kesehatan toko dengan memproses pesanan tepat waktu, memperbarui stok secara berkala, serta memberikan layanan pelanggan yang responsif.",
+    ],
+    focus: ["Data Analysis", "Search Engine Optimization", "E-commerce Communication", "Paid Advertising", "Performance Reporting", "Marketplace Management","Market Analysis","Campaign Management"],
+    logo: "/images/experience/trust.jpg",
     color: "from-brand-blue to-blue-500",
     lightBg: "bg-blue-50 dark:bg-blue-900/20",
     lightText: "text-blue-700 dark:text-blue-300",
     dotColor: "from-brand-blue to-blue-500",
   },
   {
-    period: "2024",
-    title: "Research Assistant — Applied ML",
-    org: "University Lab",
-    description:
-      "Assisted in running experiments with classical ML models, comparing baselines, and documenting results for internal reports.",
-    focus: ["Scikit-learn", "Experimentation", "Documentation"],
-    logo: "/images/experience/trust.jpg", // ← ganti path logo instansi
+    title: "Teaching Assistant - Basic Programming",
+    org: "University Muhammadiyah Sukabumi",
+    duration: "Mar 2024 - Dec 2024",
+    type: "Part-time",
+    description: [
+      "Memberikan dukungan akademik kepada 24 mahasiswa dengan menyederhanakan konsep pemrograman yang kompleks, seperti Algoritma dan Struktur Data.",
+      "Memimpin sesi laboratorium mingguan serta latihan coding untuk membantu mahasiswa menerapkan konsep teori ke dalam praktik.",
+      "Menilai tugas, kuis, dan ujian praktikum untuk 24 mahasiswa dengan tingkat ketelitian dan konsistensi yang tinggi.",
+      "Berkolaborasi dengan dosen pengampu dalam menyusun materi pembelajaran dan soal latihan untuk kebutuhan perkuliahan selama satu semester.",
+    ],
+    focus: ["Python-Programming", "Logic Programming", "Object Oriented Programming", "Data Structures", "Algorithm Design","Public Speaking", "Mentoring","Educational Support","Teaching","Leadership"],
+    logo: "/images/experience/ummi.png",
     color: "from-brand-cyan to-cyan-400",
     lightBg: "bg-cyan-50 dark:bg-cyan-900/20",
     lightText: "text-cyan-700 dark:text-cyan-300",
     dotColor: "from-brand-cyan to-cyan-400",
   },
   {
-    period: "2023",
-    title: "Student Projects & Hackathons",
-    org: "Various Teams",
-    description:
-      "Participated in hackathons focused on AI assistants, data visualization, and productivity tools, often taking the data role in the team.",
-    focus: ["Prototyping", "Teamwork", "Presentations"],
-    logo: "/images/experience/mister.jpg", // ← ganti path logo instansi
+    title: "Cashier & Administrative Assistant",
+    org: "Mister Penyet 2",
+    duration: "Mar 2024 - Des 2024",
+    type: "Full-Time",
+    description: [
+      "Melakukan rekonsiliasi kas harian (cash count) dan memastikan saldo petty cash selalu akurat.",
+      "Mengelola transaksi pembayaran tunai, kartu kredit, serta pembayaran digital (QRIS/E-wallet) dengan tingkat ketelitian hingga 99,9%.",
+      "Memberikan pelayanan kepada pelanggan secara ramah dan efisien untuk meningkatkan kepuasan pelanggan.",
+    ],
+    focus: ["Data Entry", "Microsoft Office", "Customer Service", "Cash Handling", "Financial Reporting", "Cash Handling"],
+    logo: "/images/experience/mister.jpg",
     color: "from-violet-500 to-indigo-500",
     lightBg: "bg-violet-50 dark:bg-violet-900/20",
     lightText: "text-violet-700 dark:text-violet-300",
     dotColor: "from-violet-500 to-indigo-500",
   },
-  
+  {
+    title: "Management Staff",
+    org: "CV. Alam Printing",
+    duration: "Jan 2023 - Mar 2023",
+    type: "Internship",
+    description: [
+      "Berinteraksi langsung dengan pelanggan untuk memahami kebutuhan mereka, memberikan solusi, dan memastikan kepuasan pelanggan melalui produk berkualitas tinggi.",
+      "Berkolaborasi dengan tim pemasaran untuk mengembangkan kampanye promosi melalui media sosial dan website perusahaan.",
+      "Mengelola proyek cetak sablon dan percetakan khusus untuk perusahaan-perusahaan besar, mengoordinasikan jadwal, anggaran, dan persyaratan spesifik lainnya.",
+    ],
+    focus: ["Microsoft Office", "Data Entry", "Device Drivers", "Customer Service"],
+    logo: "/images/experience/alam.jpg",
+    color: "from-violet-500 to-indigo-500",
+    lightBg: "bg-violet-50 dark:bg-violet-900/20",
+    lightText: "text-violet-700 dark:text-violet-300",
+    dotColor: "from-violet-500 to-indigo-500",
+  },
 ];
+
+const typeBadge: Record<string, string> = {
+  "Full-time": "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300",
+  "Part-time": "bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300",
+  "Internship": "bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-300",
+  "Freelance": "bg-pink-50 text-pink-700 dark:bg-pink-900/20 dark:text-pink-300",
+};
 
 export function Experience() {
   const [expanded, setExpanded] = useState<number | null>(0);
@@ -54,13 +92,12 @@ export function Experience() {
   return (
     <section id="experience" className="section">
       <div className="mx-auto max-w-7xl">
-        <p className="section-heading">Experience & Research</p>
-        <h2 className="section-title">Learning by building in public.</h2>
+        <p className="section-heading">Experience</p>
+        <h2 className="section-title">Beberapa Pengalaman Kerja Saya</h2>
       </div>
 
       <div className="mt-10 mx-auto max-w-3xl">
         <div className="relative">
-          {/* Vertical timeline line */}
           <div className="absolute left-5 top-0 h-full w-px bg-gradient-to-b from-brand-blue/70 via-slate-200 to-brand-cyan/70 dark:via-slate-600" />
 
           <div className="space-y-6 pl-14">
@@ -76,7 +113,6 @@ export function Experience() {
                   transition={{ duration: 0.5, delay: idx * 0.1, ease: "easeOut" }}
                   className="relative"
                 >
-                  {/* Timeline dot */}
                   <motion.div
                     className={`absolute -left-9 top-5 h-3 w-3 rounded-full bg-gradient-to-tr ${item.dotColor} shadow-soft ring-2 ring-white dark:ring-slate-900`}
                     initial={{ scale: 0 }}
@@ -85,7 +121,6 @@ export function Experience() {
                     transition={{ type: "spring", bounce: 0.5, delay: idx * 0.1 }}
                   />
 
-                  {/* Accordion card */}
                   <motion.button
                     onClick={() => setExpanded(isOpen ? null : idx)}
                     className={`w-full text-left overflow-hidden rounded-2xl border transition-all duration-300 ${
@@ -98,7 +133,6 @@ export function Experience() {
                   >
                     {/* Header */}
                     <div className="flex items-center gap-4 p-4">
-                      {/* Logo */}
                       <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-700">
                         <Image
                           src={item.logo}
@@ -108,18 +142,25 @@ export function Experience() {
                         />
                       </div>
 
-                      {/* Text */}
                       <div className="flex-1 min-w-0">
-                        <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${item.lightBg} ${item.lightText}`}>
-                          {item.period}
-                        </span>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {item.duration && (
+                            <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${item.lightBg} ${item.lightText}`}>
+                              {item.duration}
+                            </span>
+                          )}
+                          {item.type && (
+                            <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${typeBadge[item.type] ?? ""}`}>
+                              {item.type}
+                            </span>
+                          )}
+                        </div>
                         <p className="mt-0.5 text-sm font-semibold text-slate-900 dark:text-white truncate">
                           {item.title}
                         </p>
                         <p className="text-xs text-slate-500 dark:text-slate-400">{item.org}</p>
                       </div>
 
-                      {/* Chevron */}
                       <motion.div
                         animate={{ rotate: isOpen ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
@@ -142,9 +183,19 @@ export function Experience() {
                         >
                           <div className={`mx-4 h-px bg-gradient-to-r ${item.color} opacity-20`} />
                           <div className="px-4 pb-4 pt-3">
-                            <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                              {item.description}
-                            </p>
+                            {Array.isArray(item.description) ? (
+                              <ul className="space-y-1">
+                                {item.description.map((point, i) => (
+                                  <li key={i} className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                                    - {point}
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                                {item.description}
+                              </p>
+                            )}
                             <div className="mt-3">
                               <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                                 Focus
