@@ -10,9 +10,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Turning Data Into Intelligent Solutions | Portfolio",
+  title: "Moch Putra's Portfolio",
   description:
-    "Portfolio of a Computer Science student and aspiring Data Analyst focused on AI automation, LLMs, and data-driven solutions.",
+    "Portofolio Putra, mahasiswa Teknik Informatika yang berfokus pada data analytics, AI automation, dan LLM. Temukan proyek, pengalaman, dan sertifikasi saya di bidang data dan AI.",
   keywords: [
     "Data Analyst",
     "AI Automation",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
     "Next.js",
   ],
   openGraph: {
-    title: "Turning Data Into Intelligent Solutions",
+    title: "Moch Putra's Portfolio",
     description:
-      "Modern portfolio for a data and AI-focused Computer Science student.",
+      "Portofolio Putra, mahasiswa Teknik Informatika yang berfokus pada data analytics, AI automation, dan LLM. Temukan proyek, pengalaman, dan sertifikasi saya di bidang data dan AI.",
     url: "https://example.com",
     siteName: "AI/Data Portfolio",
     type: "website",
