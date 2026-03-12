@@ -4,22 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
 
-const GITHUB_USERNAME = "MochPutra";
-
-type ContributionDay = {
-  date: string;
-  contributionCount: number;
-  color: string;
-};
-
-type Week = {
-  contributionDays: ContributionDay[];
-};
-
-type CalendarData = {
-  totalContributions: number;
-  weeks: Week[];
-};
+const GITHUB_USERNAME = "mochputra";
 
 const toolLogos = [
   { name: "Python", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
@@ -38,40 +23,12 @@ const toolLogos = [
 
 const marqueeItems = [...toolLogos, ...toolLogos];
 
-const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
 export function Skills() {
   const [mounted, setMounted] = useState(false);
-  const [calendar, setCalendar] = useState<CalendarData | null>(null);
-  const [tooltip, setTooltip] = useState<{ day: ContributionDay; x: number; y: number } | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  setMounted(true);
-  fetch("/api/github")
-    .then((r) => r.json())
-    .then((data) => {
-      // ✅ Cek apakah data valid sebelum set
-      if (data?.weeks) {
-        setCalendar(data);
-      }
-      setLoading(false);
-    })
-    .catch(() => setLoading(false));
-}, []);
-
-  // Get month labels from weeks
-  const monthLabels: { label: string; index: number }[] = [];
-  if (calendar?.weeks) {
-    let lastMonth = -1;
-    calendar.weeks.forEach((week, i) => {
-      const month = new Date(week.contributionDays[0]?.date).getMonth();
-      if (month !== lastMonth) {
-        monthLabels.push({ label: MONTHS[month], index: i });
-        lastMonth = month;
-      }
-    });
-  }
+    setMounted(true);
+  }, []);
 
   return (
     <section id="skills" className="section">
@@ -86,7 +43,7 @@ export function Skills() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="mx-auto mb-8 max-w-5xl overflow-hidden rounded-3xl bg-white/80 p-6 shadow-soft backdrop-blur-xl dark:bg-slate-800/80"
+        className="mx-auto mb-12 max-w-5xl overflow-hidden rounded-3xl bg-white/80 p-6 shadow-soft backdrop-blur-xl dark:bg-slate-800/80"
       >
         {/* Header */}
         <div className="mb-5 flex items-center justify-between">
@@ -98,11 +55,9 @@ export function Skills() {
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
                 @{GITHUB_USERNAME}
               </h3>
-              {calendar && (
-                <p className="text-xs text-slate-500 dark:text-slate-400">
-                  {calendar.totalContributions.toLocaleString()} contributions this year
-                </p>
-              )}
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                GitHub Contributions
+              </p>
             </div>
           </div>
           <a
@@ -117,83 +72,36 @@ export function Skills() {
         </div>
 
         {/* Chart */}
-        <div className="w-full overflow-x-auto rounded-2xl bg-slate-50/80 p-4 dark:bg-slate-900/40">
-          {loading || !mounted ? (
-            // Skeleton
-            <div className="flex gap-1 animate-pulse">
-              {Array.from({ length: 53 }).map((_, i) => (
-                <div key={i} className="flex flex-col gap-1">
-                  {Array.from({ length: 7 }).map((_, j) => (
-                    <div key={j} className="h-3 w-3 rounded-sm bg-slate-200 dark:bg-slate-700" />
-                  ))}
-                </div>
-              ))}
-            </div>
-          ) : calendar ? (
-            <div className="relative">
-              {/* Month labels */}
-              <div className="mb-1 flex text-[10px] text-slate-400 dark:text-slate-500" style={{ paddingLeft: "2px" }}>
-                {monthLabels.map(({ label, index }) => (
-                  <div
-                    key={label + index}
-                    className="absolute text-[10px] text-slate-400"
-                    style={{ left: `${index * 14}px` }}
-                  >
-                    {label}
-                  </div>
-                ))}
-              </div>
-
-              {/* Grid */}
-              <div className="mt-5 flex gap-[3px]">
-                {calendar.weeks.map((week, wi) => (
-                  <div key={wi} className="flex flex-col gap-[3px]">
-                    {week.contributionDays.map((day) => (
-                      <div
-                        key={day.date}
-                        className="h-[11px] w-[11px] rounded-sm cursor-pointer transition-transform hover:scale-125"
-                        style={{ backgroundColor: day.color === "#ebedf0" ? undefined : day.color }}
-                        onMouseEnter={(e) => {
-                          const rect = (e.target as HTMLElement).getBoundingClientRect();
-                          setTooltip({ day, x: rect.left, y: rect.top });
-                        }}
-                        onMouseLeave={() => setTooltip(null)}
-                      />
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <p className="text-xs text-slate-400">Gagal memuat data GitHub.</p>
-          )}
-        </div>
+        {mounted && (
+          <div className="w-full overflow-x-auto rounded-2xl bg-slate-50/80 p-4 dark:bg-slate-900/40">
+            <img
+              src={`https://ghchart.rshah.org/2563eb/${GITHUB_USERNAME}`}
+              alt={`GitHub contribution chart for ${GITHUB_USERNAME}`}
+              className="w-full min-w-[600px] dark:hidden"
+            />
+            <img
+              src={`https://ghchart.rshah.org/38bdf8/${GITHUB_USERNAME}`}
+              alt={`GitHub contribution chart for ${GITHUB_USERNAME}`}
+              className="hidden w-full min-w-[600px] dark:block"
+            />
+          </div>
+        )}
 
         {/* Legend */}
         <div className="mt-3 flex items-center justify-end gap-2 text-xs text-slate-400">
           <span>Less</span>
-          {["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"].map((color, i) => (
-            <span
-              key={i}
-              className="h-3 w-3 rounded-sm"
-              style={{ backgroundColor: color }}
-            />
+          {[
+            "bg-slate-100 dark:bg-slate-700",
+            "bg-blue-200 dark:bg-blue-900",
+            "bg-blue-400 dark:bg-blue-700",
+            "bg-blue-500 dark:bg-blue-500",
+            "bg-blue-700 dark:bg-blue-400",
+          ].map((c, i) => (
+            <span key={i} className={`h-3 w-3 rounded-sm ${c}`} />
           ))}
           <span>More</span>
         </div>
       </motion.div>
-
-      {/* Tooltip */}
-      {tooltip && (
-        <div
-          className="fixed z-50 pointer-events-none rounded-lg bg-slate-900 px-2.5 py-1.5 text-xs text-white shadow-xl"
-          style={{ top: tooltip.y - 40, left: tooltip.x - 20 }}
-        >
-          <span className="font-semibold">{tooltip.day.contributionCount} contributions</span>
-          <br />
-          <span className="text-slate-300">{new Date(tooltip.day.date).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}</span>
-        </div>
-      )}
 
       {/* Logo Marquee */}
       <motion.div
@@ -201,7 +109,7 @@ export function Skills() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="mt-12 overflow-hidden rounded-2xl bg-white/60 py-5 shadow-soft backdrop-blur-xl dark:bg-slate-800/60"
+        className="overflow-hidden rounded-2xl bg-white/60 py-5 shadow-soft backdrop-blur-xl dark:bg-slate-800/60"
       >
         <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
           Teknologi &amp; Tools yang Saya Gunakan

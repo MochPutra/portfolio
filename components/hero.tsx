@@ -31,9 +31,9 @@ export function Hero() {
             <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-tr from-brand-blue to-brand-cyan text-white">
               <Sparkles className="h-3 w-3" />
             </span>
-            Lagi seru-serunya ngulik titik temu antara{" "}
+            Ai and Data{" "}
             <span className="font-semibold text-slate-900">
-              data, AI, dan otomasi
+              Enthusiast
             </span>
           </motion.div>
 
