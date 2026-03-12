@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+// ✅ Tambahkan baris ini
+export const dynamic = "force-dynamic";
+
 const GITHUB_USERNAME = "MochPutra";
 
 const query = `
@@ -22,19 +25,27 @@ const query = `
 `;
 
 export async function GET() {
-  const res = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ query }),
-    next: { revalidate: 3600 }, // cache 1 jam
-  });
+  try {
+    const res = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query }),
+      next: { revalidate: 3600 },
+    });
 
-  const data = await res.json();
-  const calendar =
-    data?.data?.user?.contributionsCollection?.contributionCalendar;
+    const data = await res.json();
+    const calendar =
+      data?.data?.user?.contributionsCollection?.contributionCalendar;
 
-  return NextResponse.json(calendar);
+    if (!calendar) {
+      return NextResponse.json({ error: "No data" }, { status: 404 });
+    }
+
+    return NextResponse.json(calendar);
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to fetch" }, { status: 500 });
+  }
 }
