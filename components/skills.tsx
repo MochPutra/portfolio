@@ -47,19 +47,22 @@ export function Skills() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setMounted(true);
-    fetch("/api/github")
-      .then((r) => r.json())
-      .then((data) => {
+  setMounted(true);
+  fetch("/api/github")
+    .then((r) => r.json())
+    .then((data) => {
+      // ✅ Cek apakah data valid sebelum set
+      if (data?.weeks) {
         setCalendar(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+      }
+      setLoading(false);
+    })
+    .catch(() => setLoading(false));
+}, []);
 
   // Get month labels from weeks
   const monthLabels: { label: string; index: number }[] = [];
-  if (calendar) {
+  if (calendar?.weeks) {
     let lastMonth = -1;
     calendar.weeks.forEach((week, i) => {
       const month = new Date(week.contributionDays[0]?.date).getMonth();

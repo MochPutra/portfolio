@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-const GITHUB_USERNAME = "mochputra";
+const GITHUB_USERNAME = "MochPutra";
 
 const query = `
   query {
