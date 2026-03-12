@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 
-// ✅ Tambahkan baris ini
 export const dynamic = "force-dynamic";
 
 const GITHUB_USERNAME = "mochputra";
@@ -33,19 +32,14 @@ export async function GET() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ query }),
-      next: { revalidate: 3600 },
     });
 
     const data = await res.json();
-    const calendar =
-      data?.data?.user?.contributionsCollection?.contributionCalendar;
-
-    if (!calendar) {
-      return NextResponse.json({ error: "No data" }, { status: 404 });
-    }
-
-    return NextResponse.json(calendar);
+    
+    // ✅ Return raw data untuk debug
+    return NextResponse.json(data);
+    
   } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch" }, { status: 500 });
+    return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }
