@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 // ✅ Tambahkan baris ini
 export const dynamic = "force-dynamic";
 
-const GITHUB_USERNAME = "MochPutra";
+const GITHUB_USERNAME = "mochputra";
 
 const query = `
   query {
