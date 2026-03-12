@@ -2,58 +2,24 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Database, Brain, BarChart3 } from "lucide-react";
-import {
-  Radar,
-  RadarChart as RechartsRadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ResponsiveContainer,
-  Tooltip,
-  Legend,
-} from "recharts";
+import { Github, ExternalLink } from "lucide-react";
 
-const skillCategories = [
-  {
-    icon: Database,
-    label: "Data",
-    items: [
-      { name: "Python", level: 80 },
-      { name: "SQL", level: 75 },
-      { name: "Excel", level: 85 },
-    ],
-  },
-  {
-    icon: Brain,
-    label: "AI & ML",
-    items: [
-      { name: "Pandas / NumPy", level: 80 },
-      { name: "Scikit-learn", level: 70 },
-      { name: "LLM Integration", level: 65 },
-    ],
-  },
-  {
-    icon: BarChart3,
-    label: "Tools",
-    items: [
-      { name: "Power BI", level: 70 },
-      { name: "Tableau", level: 65 },
-      { name: "Git / GitHub", level: 75 },
-    ],
-  },
-];
+const GITHUB_USERNAME = "MochPutra";
 
-const radarData = [
-  { subject: "Python", value: 80, fullMark: 100 },
-  { subject: "SQL", value: 75, fullMark: 100 },
-  { subject: "Excel", value: 85, fullMark: 100 },
-  { subject: "Pandas/NumPy", value: 80, fullMark: 100 },
-  { subject: "Scikit-learn", value: 70, fullMark: 100 },
-  { subject: "LLM", value: 65, fullMark: 100 },
-  { subject: "Power BI", value: 70, fullMark: 100 },
-  { subject: "Tableau", value: 65, fullMark: 100 },
-];
+type ContributionDay = {
+  date: string;
+  contributionCount: number;
+  color: string;
+};
+
+type Week = {
+  contributionDays: ContributionDay[];
+};
+
+type CalendarData = {
+  totalContributions: number;
+  weeks: Week[];
+};
 
 const toolLogos = [
   { name: "Python", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
@@ -70,111 +36,161 @@ const toolLogos = [
   { name: "TensorFlow", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" },
 ];
 
-// Duplicate for seamless infinite scroll
 const marqueeItems = [...toolLogos, ...toolLogos];
+
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
 export function Skills() {
   const [mounted, setMounted] = useState(false);
+  const [calendar, setCalendar] = useState<CalendarData | null>(null);
+  const [tooltip, setTooltip] = useState<{ day: ContributionDay; x: number; y: number } | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
+    fetch("/api/github")
+      .then((r) => r.json())
+      .then((data) => {
+        setCalendar(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
+
+  // Get month labels from weeks
+  const monthLabels: { label: string; index: number }[] = [];
+  if (calendar) {
+    let lastMonth = -1;
+    calendar.weeks.forEach((week, i) => {
+      const month = new Date(week.contributionDays[0]?.date).getMonth();
+      if (month !== lastMonth) {
+        monthLabels.push({ label: MONTHS[month], index: i });
+        lastMonth = month;
+      }
+    });
+  }
 
   return (
     <section id="skills" className="section">
       <div className="mx-auto max-w-7xl">
-        <p className="section-heading">Skills/Tools</p>
-        <h2 className="section-title">Apa saja yang saya gunakan untuk bekerja.</h2>
+        <p className="section-heading">GitHub Activity</p>
+        <h2 className="section-title">Kontribusi &amp; Aktivitas Coding Saya.</h2>
       </div>
 
-      {/* Radar chart */}
+      {/* GitHub Contribution Heatmap */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
-        className="mx-auto mb-12 max-w-2xl overflow-hidden rounded-3xl bg-white/80 p-6 shadow-soft backdrop-blur-xl dark:bg-slate-800/80 dark:shadow-slate-900/20"
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="mx-auto mb-8 max-w-5xl overflow-hidden rounded-3xl bg-white/80 p-6 shadow-soft backdrop-blur-xl dark:bg-slate-800/80"
       >
-        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-          Skills overview
-        </h3>
-        <div className="w-full min-h-[300px] h-[288px]">
-          {mounted && (
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsRadarChart data={radarData}>
-                <PolarGrid stroke="rgba(148,163,184,0.4)" />
-                <PolarAngleAxis
-                  dataKey="subject"
-                  tick={{ fontSize: 11, fill: "currentColor" }}
-                  className="text-slate-600 dark:text-slate-400"
-                />
-                <PolarRadiusAxis
-                  angle={90}
-                  domain={[0, 100]}
-                  tick={{ fontSize: 10 }}
-                />
-                <Radar
-                  name="Proficiency"
-                  dataKey="value"
-                  stroke="#2563eb"
-                  fill="#2563eb"
-                  fillOpacity={0.4}
-                  strokeWidth={2}
-                />
-                <Tooltip
-                  contentStyle={{
-                    borderRadius: "12px",
-                    border: "1px solid rgba(148,163,184,0.3)",
-                  }}
-                />
-                <Legend />
-              </RechartsRadarChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-      </motion.div>
-
-      {/* Skill cards */}
-      <div className="grid gap-6 md:grid-cols-3">
-        {skillCategories.map((category, idx) => (
-          <motion.div
-            key={category.label}
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: idx * 0.08, ease: "easeOut" }}
-            whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="glass flex flex-col rounded-2xl p-5 transition-shadow hover:shadow-xl dark:bg-slate-800/60 dark:border-slate-700/50"
-          >
-            <div className="flex items-center gap-2">
-              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-brand-blue/90 to-brand-cyan/90 text-white shadow-soft">
-                <category.icon className="h-5 w-5" />
-              </span>
+        {/* Header */}
+        <div className="mb-5 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-slate-800 to-slate-600 text-white shadow-soft dark:from-slate-600 dark:to-slate-400">
+              <Github className="h-4 w-4" />
+            </span>
+            <div>
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
-                {category.label}
+                @{GITHUB_USERNAME}
               </h3>
+              {calendar && (
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  {calendar.totalContributions.toLocaleString()} contributions this year
+                </p>
+              )}
             </div>
-            <div className="mt-4 space-y-3">
-              {category.items.map((skill) => (
-                <div key={skill.name}>
-                  <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
-                    <span>{skill.name}</span>
-                    <span>{skill.level}%</span>
-                  </div>
-                  <div className="mt-1 h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
-                    <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-brand-blue to-brand-cyan"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      viewport={{ once: true, amount: 0.6 }}
-                      transition={{ duration: 0.8, ease: "easeOut" }}
-                    />
-                  </div>
+          </div>
+          <a
+            href={`https://github.com/${GITHUB_USERNAME}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-700/50"
+          >
+            Lihat Profil
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
+
+        {/* Chart */}
+        <div className="w-full overflow-x-auto rounded-2xl bg-slate-50/80 p-4 dark:bg-slate-900/40">
+          {loading || !mounted ? (
+            // Skeleton
+            <div className="flex gap-1 animate-pulse">
+              {Array.from({ length: 53 }).map((_, i) => (
+                <div key={i} className="flex flex-col gap-1">
+                  {Array.from({ length: 7 }).map((_, j) => (
+                    <div key={j} className="h-3 w-3 rounded-sm bg-slate-200 dark:bg-slate-700" />
+                  ))}
                 </div>
               ))}
             </div>
-          </motion.div>
-        ))}
-      </div>
+          ) : calendar ? (
+            <div className="relative">
+              {/* Month labels */}
+              <div className="mb-1 flex text-[10px] text-slate-400 dark:text-slate-500" style={{ paddingLeft: "2px" }}>
+                {monthLabels.map(({ label, index }) => (
+                  <div
+                    key={label + index}
+                    className="absolute text-[10px] text-slate-400"
+                    style={{ left: `${index * 14}px` }}
+                  >
+                    {label}
+                  </div>
+                ))}
+              </div>
+
+              {/* Grid */}
+              <div className="mt-5 flex gap-[3px]">
+                {calendar.weeks.map((week, wi) => (
+                  <div key={wi} className="flex flex-col gap-[3px]">
+                    {week.contributionDays.map((day) => (
+                      <div
+                        key={day.date}
+                        className="h-[11px] w-[11px] rounded-sm cursor-pointer transition-transform hover:scale-125"
+                        style={{ backgroundColor: day.color === "#ebedf0" ? undefined : day.color }}
+                        onMouseEnter={(e) => {
+                          const rect = (e.target as HTMLElement).getBoundingClientRect();
+                          setTooltip({ day, x: rect.left, y: rect.top });
+                        }}
+                        onMouseLeave={() => setTooltip(null)}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs text-slate-400">Gagal memuat data GitHub.</p>
+          )}
+        </div>
+
+        {/* Legend */}
+        <div className="mt-3 flex items-center justify-end gap-2 text-xs text-slate-400">
+          <span>Less</span>
+          {["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"].map((color, i) => (
+            <span
+              key={i}
+              className="h-3 w-3 rounded-sm"
+              style={{ backgroundColor: color }}
+            />
+          ))}
+          <span>More</span>
+        </div>
+      </motion.div>
+
+      {/* Tooltip */}
+      {tooltip && (
+        <div
+          className="fixed z-50 pointer-events-none rounded-lg bg-slate-900 px-2.5 py-1.5 text-xs text-white shadow-xl"
+          style={{ top: tooltip.y - 40, left: tooltip.x - 20 }}
+        >
+          <span className="font-semibold">{tooltip.day.contributionCount} contributions</span>
+          <br />
+          <span className="text-slate-300">{new Date(tooltip.day.date).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}</span>
+        </div>
+      )}
 
       {/* Logo Marquee */}
       <motion.div
@@ -185,26 +201,16 @@ export function Skills() {
         className="mt-12 overflow-hidden rounded-2xl bg-white/60 py-5 shadow-soft backdrop-blur-xl dark:bg-slate-800/60"
       >
         <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
-          Teknologi & Tools yang Saya Gunakan
+          Teknologi &amp; Tools yang Saya Gunakan
         </p>
-
-        {/* Fade edges */}
         <div className="relative">
           <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-white/80 to-transparent dark:from-slate-800/80" />
           <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-white/80 to-transparent dark:from-slate-800/80" />
-
           <div className="flex w-max animate-marquee gap-8 px-4">
             {marqueeItems.map((tool, i) => (
-              <div
-                key={`${tool.name}-${i}`}
-                className="flex flex-col items-center gap-2 group"
-              >
+              <div key={`${tool.name}-${i}`} className="flex flex-col items-center gap-2 group">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 p-2 shadow-sm transition-transform duration-200 group-hover:scale-110 dark:bg-slate-700/60">
-                  <img
-                    src={tool.src}
-                    alt={tool.name}
-                    className="h-8 w-8 object-contain"
-                  />
+                  <img src={tool.src} alt={tool.name} className="h-8 w-8 object-contain" />
                 </div>
                 <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
                   {tool.name}

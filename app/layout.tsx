@@ -43,7 +43,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-gradient-soft dark:bg-none dark:bg-slate-900 text-slate-900 dark:text-slate-100 overflow-x-hidden">
         <ThemeProvider>
           <div>
-            <div className="overflow-x-hidden" />
+            <div className="relative w-full overflow-x-hidden" />
             <div className="gradient-orbit" />
             <div className="grid-pattern" />
             {children}
