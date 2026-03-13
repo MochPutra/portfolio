@@ -14,52 +14,46 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
   return (
     <main className="min-h-screen">
+      <div className="mx-auto max-w-3xl px-6 pt-10 sm:px-10 sm:pt-14">
 
-      {/* Hero — full width image dengan overlay gradient */}
-      <div className="relative h-[55vh] min-h-[360px] w-full overflow-hidden">
-        {project.image ? (
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        ) : (
-          <div className="h-full w-full bg-gradient-to-tr from-slate-900 via-slate-800 to-slate-900" />
-        )}
-        {/* Gradient overlay agar teks terbaca */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+        {/* Back button */}
+        <Link
+          href="/#projects"
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-sm font-medium text-slate-700 backdrop-blur-md transition hover:border-brand-blue hover:text-brand-blue dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-300 dark:hover:text-brand-cyan"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Kembali
+        </Link>
 
-        {/* Back button di atas gambar */}
-        <div className="absolute left-6 top-6 sm:left-10 sm:top-8">
-          <Link
-            href="/#projects"
-            className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition hover:bg-white/30"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Kembali
-          </Link>
+        {/* Tags */}
+        <div className="mt-6 flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400"
+            >
+              {tag}
+            </span>
+          ))}
         </div>
 
-        {/* Title overlay di bawah gambar */}
-        <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 sm:px-10 sm:pb-10">
-          <div className="mx-auto max-w-3xl">
-            <div className="mb-3 flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-white/30 bg-white/20 px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white backdrop-blur-sm"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <h1 className="text-3xl font-semibold text-white sm:text-4xl lg:text-5xl">
-              {project.title}
-            </h1>
+        {/* Title */}
+        <h1 className="mt-4 text-3xl font-semibold text-slate-900 dark:text-white sm:text-4xl">
+          {project.title}
+        </h1>
+
+        {/* Image — tidak full, ada rounded dan shadow */}
+        {project.image && (
+          <div className="mt-8 relative h-[280px] w-full overflow-hidden rounded-2xl shadow-soft sm:h-[360px]">
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
-        </div>
+        )}
       </div>
 
       {/* Content */}
@@ -160,7 +154,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
           <div className="rounded-2xl bg-gradient-to-tr from-brand-blue/5 to-brand-cyan/5 p-6 dark:bg-slate-800/60 dark:from-slate-800/60 dark:to-slate-800/60">
             <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
-              Hasil & Impact
+              Hasil &amp; Impact
             </h2>
             <p className="text-base leading-relaxed text-slate-700 dark:text-slate-300">
               {project.caseStudy.results}

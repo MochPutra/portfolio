@@ -87,7 +87,7 @@ export function About() {
   });
 
   const photoY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
-  const textY = useTransform(scrollYProgress, [0, 1], [20, -20]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, 0]);
 
   const activeContent = tabs.find((t) => t.id === activeTab)?.content;
 
@@ -98,62 +98,15 @@ export function About() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="rounded-3xl bg-white/70 p-6 shadow-soft backdrop-blur-xl dark:bg-slate-800/70 md:p-8"
+        className="rounded-3xl bg-white/70 p-6 shadow-soft backdrop-blur-xl dark:bg-slate-800/70 md:p-8 overflow-hidden"
       >
         <div className="grid gap-8 md:grid-cols-[1.4fr,1fr]">
-          {/* Left: Text content */}
-          <motion.div style={{ y: textY }}>
-            <p className="section-heading">Tentang Saya</p>
-            <h2 className="section-title">A student obsessed with data &amp; AI.</h2>
 
-            {/* Tabs */}
-            <div className="mb-5 flex gap-1 rounded-xl bg-slate-100/80 p-1 dark:bg-slate-700/50">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className="relative flex-1 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors duration-200"
-                >
-                  {activeTab === tab.id && (
-                    <motion.span
-                      layoutId="tab-indicator"
-                      className="absolute inset-0 rounded-lg bg-white shadow-sm dark:bg-slate-600"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
-                    />
-                  )}
-                  <span
-                    className={`relative z-10 transition-colors duration-200 ${
-                      activeTab === tab.id
-                        ? "text-blue-600 dark:text-blue-400"
-                        : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
-                    }`}
-                  >
-                    {tab.label}
-                  </span>
-                </button>
-              ))}
-            </div>
-
-            {/* Tab content */}
-            <div className="min-h-[120px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                >
-                  {activeContent}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </motion.div>
-
-          {/* Right: Photo with hover effect */}
+          {/* FOTO — letakkan duluan di JSX agar tampil di atas saat mobile */}
           <motion.div
             style={{ y: photoY }}
-            className="flex items-center justify-center md:justify-end"
+            className="flex items-center justify-center pt-4 md:col-start-2 md:row-start-1 md:justify-end md:pt-0"
+
           >
             <motion.div
               className="group relative cursor-pointer"
@@ -210,6 +163,59 @@ export function About() {
               </motion.div>
             </motion.div>
           </motion.div>
+
+          {/* TEKS — letakkan setelah foto di JSX */}
+          <motion.div
+            style={{ y: textY }}
+            className="md:col-start-1 md:row-start-1"
+          >
+            <p className="section-heading">About</p>
+            <h2 className="section-title">Get To Know Me</h2>
+
+            {/* Tabs */}
+            <div className="mb-5 flex gap-1 rounded-xl bg-slate-100/80 p-1 dark:bg-slate-700/50">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className="relative flex-1 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors duration-200"
+                >
+                  {activeTab === tab.id && (
+                    <motion.span
+                      layoutId="tab-indicator"
+                      className="absolute inset-0 rounded-lg bg-white shadow-sm dark:bg-slate-600"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                    />
+                  )}
+                  <span
+                    className={`relative z-10 transition-colors duration-200 ${
+                      activeTab === tab.id
+                        ? "text-blue-600 dark:text-blue-400"
+                        : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+                    }`}
+                  >
+                    {tab.label}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Tab content */}
+            <div className="min-h-[120px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                >
+                  {activeContent}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </motion.div>
+
         </div>
       </motion.div>
     </section>

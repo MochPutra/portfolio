@@ -3,7 +3,6 @@ import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
 import { Skills } from "@/components/skills";
 import { Projects } from "@/components/projects";
-import { MiniDashboard } from "@/components/mini-dashboard";
 import { AiAssistant } from "@/components/ai-assistant";
 import { Experience } from "@/components/experience";
 import { Certificates } from "@/components/certificate";
@@ -22,7 +21,6 @@ export default function HomePage() {
           <About />
           <Skills />
           <Projects />
-          <MiniDashboard />
           <AiAssistant />
           <Experience />
           <Certificates/>

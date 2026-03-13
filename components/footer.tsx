@@ -14,8 +14,10 @@ const quickLinks = [
 
 export function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  document.documentElement.scrollTo({ top: 0, behavior: "smooth" });
+  document.body.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
 
   return (
     <footer className="border-t border-slate-200/60 bg-white/60 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-900/60">

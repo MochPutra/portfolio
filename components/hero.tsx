@@ -43,11 +43,11 @@ export function Hero() {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.05 }}
             className="text-4xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl lg:text-6xl"
           >
-            Mengubah{" "}
+            Hi my name's{" "}
             <span className="bg-gradient-to-tr from-brand-blue to-brand-cyan bg-clip-text text-transparent">
-              Data
+              Putra
             </span>{" "}
-            menjadi Solusi Cerdas
+            
           </motion.h1>
 
           <motion.p
@@ -56,7 +56,7 @@ export function Hero() {
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.08 }}
             className="max-w-xl text-sm leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base"
           >
-            Halo! Perkenalkan nama saya Putra, saya adalah mahasiswa Teknik Informatika yang berfokus di bidang data analytics, AI automation, dan Large Language Models.
+            saya adalah mahasiswa Teknik Informatika yang memiliki minat besar dalam bidang data dan AI. Saya senang menganalisis data, membangun solusi otomatisasi berbasis AI, dan terus belajar tentang teknologi terbaru di dunia data science dan machine learning.
           </motion.p>
 
           <motion.div
