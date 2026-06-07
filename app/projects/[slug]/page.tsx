@@ -43,7 +43,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         </h1>
 
         {/* Image — tidak full, ada rounded dan shadow */}
-        {project.detailImages?.length > 0 && (
+        {project.detailImages && project.detailImages.length > 0 && (
           <div className="mt-8 space-y-3">
             {/* Foto utama */}
             <div className="relative h-[320px] w-full overflow-hidden rounded-2xl shadow-soft">
