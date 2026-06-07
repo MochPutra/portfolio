@@ -151,16 +151,7 @@ export function About() {
                 </motion.div>
               </div>
 
-              {/* Floating badge */}
-              <motion.div
-                className="absolute -bottom-3 -right-3 rounded-xl bg-white px-3 py-1.5 shadow-lg dark:bg-slate-700"
-                animate={{ y: isHovered ? -4 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <p className="text-xs font-semibold text-blue-600 dark:text-blue-400">
-                  🎓 Informatika &apos;24
-                </p>
-              </motion.div>
+              {/* Floating badge removed per request */}
             </motion.div>
           </motion.div>
 

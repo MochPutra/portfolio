@@ -43,18 +43,25 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         </h1>
 
         {/* Image — tidak full, ada rounded dan shadow */}
-        {project.image && (
-          <div className="mt-8 relative h-[280px] w-full overflow-hidden rounded-2xl shadow-soft sm:h-[360px]">
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="object-cover"
-              priority
-            />
+        {project.detailImages?.length > 0 && (
+          <div className="mt-8 space-y-3">
+            {/* Foto utama */}
+            <div className="relative h-[320px] w-full overflow-hidden rounded-2xl shadow-soft">
+              <Image src={project.detailImages[0]} alt={project.title} fill className="object-cover" priority />
+            </div>
+            {/* Foto tambahan */}
+            {project.detailImages.length > 1 && (
+              <div className="grid grid-cols-3 gap-3">
+                {project.detailImages.slice(1).map((src, i) => (
+                  <div key={i} className="relative h-[120px] overflow-hidden rounded-xl shadow-soft">
+                    <Image src={src} alt={`${project.title} ${i + 2}`} fill className="object-cover" />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
-      </div>
+      </div> {/* <-- ADDED MISSING CLOSING DIV HERE */}
 
       {/* Content */}
       <div className="mx-auto max-w-3xl px-6 py-12 sm:px-10">
